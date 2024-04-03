@@ -1,9 +1,9 @@
 {
-   "name": "plugin-template",
-   "description": "Template for enmity plugins.",
+   "name": "readeverything",
+   "description": "Mark all messages and servers as read with one button.",
    "version": "1.0.0",
    "license": "GPL-3.0",
-   "author": "Zoey & eternal",
+   "author": "byeoon",
    "scripts": {
       "build": "rollup -c --configPlugin esbuild"
    },
