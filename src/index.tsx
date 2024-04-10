@@ -16,12 +16,15 @@ const ReadEverything: Plugin = {
    onStart() {
       const unpatch = Patcher.before(LazyActionSheet, 'openLazy', (_, [component, key]) => {
          unpatch();
+         component.then(instance => {
+         const unpatchInstance = Patcher.after(instance, 'default', (_, __, res) => {
          Patcher.after(Component, "default", (_, [args, res]) => {
             console.log("did we get it?" + Component);
             res.props.children ??= [];
             // "Push our child (LOL)."
             res.props.children.push(<View>Test</View>);
-         });
+         })
+         })});
       })
    },
 
