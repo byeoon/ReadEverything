@@ -18,6 +18,7 @@ const ReadEverything: Plugin = {
          unpatch();
          component.then(instance => {
          const unpatchInstance = Patcher.after(instance, 'default', (_, __, res) => {
+            unpatchInstance();
          Patcher.after(Component, "default", (_, [args, res]) => {
             console.log("did we get it?" + Component);
             res.props.children ??= [];
