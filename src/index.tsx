@@ -14,12 +14,15 @@ const ReadEverything: Plugin = {
    ...manifest,
 
    onStart() {
-      Patcher.after(Component, "default", (_, [args, res]) => {
-         console.log("did we get it?" + Component);
-         res.props.children ??= [];
-         // "Push our child (LOL)."
-         res.props.children.push(<View>Test</View>);
-      });
+      const unpatch = Patcher.before(LazyActionSheet, 'openLazy', (_, [component, key]) => {
+         unpatch();
+         Patcher.after(Component, "default", (_, [args, res]) => {
+            console.log("did we get it?" + Component);
+            res.props.children ??= [];
+            // "Push our child (LOL)."
+            res.props.children.push(<View>Test</View>);
+         });
+      })
    },
 
    onStop() {
