@@ -7,6 +7,7 @@ import manifest from '../manifest.json';
 import findInReactTree from 'enmity/utilities/findInReactTree';
 import {getIDByName} from "enmity/api/assets";
 
+const { default: Button } = getByProps('ButtonColors', 'ButtonSizes')
 const LazyActionSheet = getByProps("openLazy", "hideActionSheet");
 const Component = getByKeyword("unreadMentionsIndicatorTop");
 const Patcher = create('ReadEverything');
@@ -25,7 +26,17 @@ const ReadEverything: Plugin = {
             console.log("did we get it?" + Component);
             res.props.children ??= [];
             // "Push our child (LOL)."
-            res.props.children.push(<View>Test</View>);
+            res.props.children.push(
+            <View>Test</View>,
+
+            <Button
+            color={Button.Colors.BRAND}
+            text={'Read'}
+            size={Button.Sizes.SMALL}
+            onPress={() => {
+            }}
+          />
+         );
          })
          })});
       })
