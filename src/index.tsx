@@ -16,13 +16,11 @@ const ReadEverything: Plugin = {
 
    onStart() {
       console.log("[ReadEverything] Hello world!");
-      const unpatchOL = Patcher.before(LazyActionSheet, 'openLazy', (_, [component, key]) => {
+      const unpatchOL = Patcher.before(LazyActionSheet, 'openLazy', (_, [component]) => {
          unpatchOL();
          component.then(instance => {
          const unpatchInstance = Patcher.after(instance, 'default', (_, __, res) => {
             unpatchInstance();
-            const unpatchType = Patcher.after(res, 'type', (_, __, res) => {
-               React.useEffect(() => () => void unpatchType(), []);
             console.log("did we get it?" + Component);
             res.props.children ??= [];
             // "Push our child (LOL)."
@@ -37,7 +35,6 @@ const ReadEverything: Plugin = {
             }}
           />
          );
-         })
          })});
       })
    },
