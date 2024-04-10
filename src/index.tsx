@@ -8,18 +8,20 @@ import findInReactTree from 'enmity/utilities/findInReactTree';
 import {getIDByName} from "enmity/api/assets";
 
 const LazyActionSheet = getByProps("openLazy", "hideActionSheet");
-const Component = getByKeyword("unreadMentionsIndicatorTop")
+const Component = getByKeyword("unreadMentionsIndicatorTop");
 const Patcher = create('ReadEverything');
 const ReadEverything: Plugin = {
    ...manifest,
 
    onStart() {
-      const unpatch = Patcher.before(LazyActionSheet, 'openLazy', (_, [component, key]) => {
-         unpatch();
+      console.log("[ReadEverything] Hello world!");
+      const unpatchOL = Patcher.before(LazyActionSheet, 'openLazy', (_, [component, key]) => {
+         unpatchOL();
          component.then(instance => {
          const unpatchInstance = Patcher.after(instance, 'default', (_, __, res) => {
             unpatchInstance();
-         Patcher.after(Component, "default", (_, [args, res]) => {
+            const unpatchType = Patcher.after(res, 'type', (_, __, res) => {
+               React.useEffect(() => () => void unpatchType(), []);
             console.log("did we get it?" + Component);
             res.props.children ??= [];
             // "Push our child (LOL)."
